@@ -1,0 +1,120 @@
+# csv file upload code
+# input {
+#   file {
+#     path => "C:/Users/kamal/OneDrive/Desktop/Docker/carprices.csv"
+#     start_position => "beginning"
+#     # sincedb_path => "NULL"
+#   }
+# }
+
+# filter {
+#   csv {
+#     separator => ","
+#     columns => ["year", "make", "model", "trim", "body", "transmission", "vin", "state", "c_condition", "odometer", "color", "interior", "seller", "mmr", "sellingprice", "saledate"]
+#   }
+# }
+
+# output {
+#   elasticsearch {
+#     hosts => "localhost:9200"
+#     index => "cars_db"
+#   }
+# }
+
+
+# json file upload code
+
+# input {
+#   file {
+#     path => "C:/Users/kamal/OneDrive/Desktop/Java Work/accounts.json"  # Ensure this path is correct and accessible by Logstash
+#     start_position => "beginning"
+#     sincedb_path => "NULL"                 # Use /dev/null to read from the beginning each time
+#     codec => "json"                             # This reads data as JSON
+#   }
+# }
+
+# output {
+#   elasticsearch {
+#     hosts => ["http://localhost:9200"]          # Ensure Elasticsearch is running and accessible
+#     index => "bank_db"                          # Name of the index to send data
+#   }
+#   stdout {
+#     codec => rubydebug                          # Outputs data to console for debugging
+#   }
+# }
+
+
+
+# input {
+#   file {
+#     path => "C:/Elastic Stack/sample.txt" # Path to your text file
+#     start_position => "beginning"
+#     sincedb_path => "NULL"
+#   }
+# }
+
+# # filter {
+# #   # Optionally, you can include filter plugins here if you need to perform any transformations on the data.
+# # }
+
+# output {
+#   elasticsearch {
+#     hosts => ["localhost:9200"] # Elasticsearch server address
+#     index => "text_file" # Name of the index where you want to store the data
+#     document_type => "_doc" # Document type (required for Elasticsearch 6.x and later)
+#   }
+# }
+
+
+# input {
+#   beats {
+#     port => 5044
+#   }
+# }
+# output {
+#   elasticsearch {
+#     hosts => ["http://localhost:9200"]
+#     index => "filebeat" # Customize the index pattern
+#   }
+# }
+
+
+
+# input {
+#   beats {
+#     port => 5044
+#   }
+# }
+
+# filter {
+#   # Apply JSON filter to parse logs in JSON format
+#   json {
+#     source => "message"
+#   }
+
+#   if "json_logs" in [tags] {
+#     # Add your filter logic for first_logs here
+#   } 
+#   else if "csv_logs" in [tags] {
+#     # Add your filter logic for second_logs here
+#   } 
+#   # else if "third_logs" in [tags] {
+#   #   # Add your filter logic for third_logs here
+#   # }
+# }
+
+# output {
+#   if "json_logs" in [tags] {
+#     elasticsearch {
+#       hosts => ["http://my-elasticsearch:9200"]
+#       index => "bank_accounts"
+#     }
+#   } else if "csv_logs" in [tags] {
+#     elasticsearch {
+#       hosts => ["http://my-elasticsearch:9200"]
+#       index => "cars_detail"
+#     }
+#   }
+  
+#   stdout { codec => rubydebug }
+# }

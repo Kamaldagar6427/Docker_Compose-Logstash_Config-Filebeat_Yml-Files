@@ -1,0 +1,42 @@
+###################### Filebeat Configuration Example #########################
+
+# ============================== Filebeat inputs ===============================
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - "/usr/share/filebeat/data/accounts.json" 
+    tags: ["json_logs"]
+
+  - type: log
+    enabled: true
+    paths:
+      - "/usr/share/filebeat/data/carprices.csv"  
+    tags: ["csv_logs"]
+
+# ============================== Filebeat modules ==============================
+# Filebeat has built-in modules for common data sources. If not needed, you can leave this empty.
+filebeat.config.modules:
+  path: "${path.config}/modules.d/*.yml"
+  reload.enabled: false  # If you need dynamic module reloading, set to true
+
+# =============================== Logstash Output ===============================
+output.logstash:
+  hosts: ["logstash:5044"]  # Update with correct Logstash service name or IP in Docker
+
+# If SSL/TLS is needed for secure communication, configure it accordingly.
+#ssl.certificate_authorities: ["/etc/pki/root/ca.pem"]  # SSL/TLS setup
+
+# ================================= Processors =================================
+processors:
+  - add_host_metadata: ~  # Adds host metadata to events
+  - add_cloud_metadata: ~  # Useful if running in cloud environments
+  - add_docker_metadata: ~  # Relevant if you're using Docker containers
+
+# ================================== Logging ===================================
+# Logging configuration for Filebeat
+logging.level: info  # Set to debug for troubleshooting
+
+# ============================= X-Pack Monitoring ==============================
+# Monitoring for Filebeat
+monitoring.enabled: false  # Disable monitoring if not needed

@@ -1,0 +1,13 @@
+docker volume ls   =>   show's all volume
+
+docker volume create <vol.name>   =>   create new volume
+
+docker volume rm <vol.name>    =>    delete volume
+
+docker volume prune    =>   remove all unused docker volume
+
+docker volume inspect <vol.name>    =>   show details of volume
+
+docker container inspect <container.name>   =>   show details of container
+
+docker run -it --name hostcont -v /root:/dagar --privileged=true ubuntu /bin/bash  =>  mapped files
